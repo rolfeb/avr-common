@@ -13,7 +13,7 @@ static volatile uint8_t  *in_reg;   // the I/O port ID
 static uint8_t  io_line;            // the I/O line 
 
 /*
- * Setup I/O parameters
+ * Setup the GPIO line to talk to the device.
  */
 void
 onewire_init(volatile uint8_t *ddr, volatile uint8_t *out,

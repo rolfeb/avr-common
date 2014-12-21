@@ -28,6 +28,10 @@ ds1820_cmd_read_scratchpad(uint8_t *x)
         x[i] = onewire_recv_byte();
 }
 
+/*
+ * Get the temperature from the DS1820 sensor.
+ * The protocol is described in the Maxim DS1820 data sheet.
+ */
 void
 ds1820_get_temperature(uint8_t *degrees, uint8_t *half)
 {
@@ -45,4 +49,3 @@ ds1820_get_temperature(uint8_t *degrees, uint8_t *half)
     if (half)
         *half = mem[0] & 0x01 ? 1 : 0;
 }
-
