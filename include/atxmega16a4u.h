@@ -1,5 +1,5 @@
-#ifndef __INCLUDE_ATMEGA88_H
-#define __INCLUDE_ATMEGA88_H
+#ifndef __INCLUDE_ATXMEGA16A4U_H
+#define __INCLUDE_ATXMEGA16A4U_H
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -19,8 +19,8 @@
  */
 #define AVR_I2C_DDR         DDRC
 #define AVR_I2C_PORT        PORTC
-#define AVR_I2C_PORT_SCL    PC5
-#define AVR_I2C_PORT_SDA    PC4
+#define AVR_I2C_PORT_SCL    PC0
+#define AVR_I2C_PORT_SDA    PC1
 
 #ifndef AVR_I2C_CLOCK_HZ
 # define AVR_I2C_CLOCK_HZ   100000L
@@ -31,10 +31,10 @@
  */
 #define AVR_SPI_DDR             DDRB
 #define AVR_SPI_PORT            PORTB
-#define AVR_SPI_PORT_SS         PB2
-#define AVR_SPI_PORT_MOSI       PB3
-#define AVR_SPI_PORT_MISO       PB4
-#define AVR_SPI_PORT_SCK        PB5
+#define AVR_SPI_PORT_SS         PB4
+#define AVR_SPI_PORT_MOSI       PB5
+#define AVR_SPI_PORT_MISO       PB6
+#define AVR_SPI_PORT_SCK        PB7
 
 #define AVR_SPI_DATA_REGISTER   SPDR
 
@@ -78,11 +78,11 @@
 #define AVR_UART0_STATUS_REGISTER_DATA_SENT_MASK    (1<<TXC0)
 #define AVR_UART0_STATUS_REGISTER_DATA_RECVD_MASK   (1<<RXC0)
 
-#define uart0_send_byte(C)  \
-    do {                    \
-        UCSR0A |= TXC0;     \
-        UDR0 = (C);         \
-    } while (0)
+#define uart0_send_byte(C)          \
+            do {                    \
+                UCSR0A |= TXC0;     \
+                UDR0 = (C);         \
+            } while (0)
 
 #define uart0_tx_buffer_empty()   ((UCSR0A & (1<<UDRE0)) != 0)
 #define uart0_tx_send_complete()  ((UCSR0A & (1<<TXC0)) != 0)
@@ -90,9 +90,6 @@
 
 #define uart0_rx_error()    ((UCSR0A & ((1<<FE0)|(1<<DOR0)|(1<<UPE0))) != 0)
 
+#endif /* __INCLUDE_ATXMEGA16A4U_H */
 
-/*
- * Define parameters for the ADC
- */
 
-#endif /* __INCLUDE_ATMEGA88_H */

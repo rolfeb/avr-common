@@ -37,15 +37,18 @@ ds1820_get_temperature(uint8_t *degrees, uint8_t *half)
 {
     uint8_t mem[9];
 
-    onewire_reset(0);
+    mem[0] = 0;
+
+    onewire_reset((uint8_t *)0);
     onewire_send_byte(OW_CMD_SKIP_ROM);
     ds1820_cmd_convert_t();
 
-    onewire_reset(0);
+    onewire_reset((uint8_t *)0);
     onewire_send_byte(OW_CMD_SKIP_ROM);
     ds1820_cmd_read_scratchpad(mem);
 
     *degrees = mem[0] >> 1;
+
     if (half)
         *half = mem[0] & 0x01 ? 1 : 0;
 }

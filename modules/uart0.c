@@ -65,7 +65,10 @@ uart0_open_stdout(void)
     // flush the receive buffer
     while ((AVR_UART0_STATUS_REGISTER
         & AVR_UART0_STATUS_REGISTER_DATA_RECVD_MASK) != 0)
+        {
             dummy = AVR_UART0_DATA_REGISTER;
+            (void)dummy;
+        }
 }
 
 void

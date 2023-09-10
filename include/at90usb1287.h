@@ -1,26 +1,16 @@
-#ifndef __INCLUDE_ATMEGA88_H
-#define __INCLUDE_ATMEGA88_H
+#ifndef __INCLUDE_AT90USB1287_H
+#define __INCLUDE_AT90USB1287_H
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-#define ENABLE_EXTERNAL_INT0()                                  \
-    do {                                                        \
-        /* generate interrupt on falling edge of INT0 */        \
-        sbi(EICRA, ISC01);                                      \
-        cbi(EICRA, ISC00);                                      \
-                                                                \
-        /* enable interrupts for INT0 */                        \
-        sbi(EIMSK, INT0);                                       \
-    } while (0)
-
 /*
  * Define parameters for the I2C interface
  */
-#define AVR_I2C_DDR         DDRC
-#define AVR_I2C_PORT        PORTC
-#define AVR_I2C_PORT_SCL    PC5
-#define AVR_I2C_PORT_SDA    PC4
+#define AVR_I2C_DDR         DDRD
+#define AVR_I2C_PORT        PORTD
+#define AVR_I2C_PORT_SCL    PD0
+#define AVR_I2C_PORT_SDA    PD1
 
 #ifndef AVR_I2C_CLOCK_HZ
 # define AVR_I2C_CLOCK_HZ   100000L
@@ -31,10 +21,10 @@
  */
 #define AVR_SPI_DDR             DDRB
 #define AVR_SPI_PORT            PORTB
-#define AVR_SPI_PORT_SS         PB2
-#define AVR_SPI_PORT_MOSI       PB3
-#define AVR_SPI_PORT_MISO       PB4
-#define AVR_SPI_PORT_SCK        PB5
+#define AVR_SPI_PORT_SS         PB0
+#define AVR_SPI_PORT_MOSI       PB2
+#define AVR_SPI_PORT_MISO       PB3
+#define AVR_SPI_PORT_SCK        PB1
 
 #define AVR_SPI_DATA_REGISTER   SPDR
 
@@ -46,7 +36,7 @@
 
 #define spi_set_speed_osc16()   do { sbi(SPCR, SPR0); } while(0)
 
-
+#if UNDEFINED 
 /*
  * Define parameters for the default UART
  */
@@ -78,21 +68,19 @@
 #define AVR_UART0_STATUS_REGISTER_DATA_SENT_MASK    (1<<TXC0)
 #define AVR_UART0_STATUS_REGISTER_DATA_RECVD_MASK   (1<<RXC0)
 
-#define uart0_send_byte(C)  \
-    do {                    \
-        UCSR0A |= TXC0;     \
-        UDR0 = (C);         \
-    } while (0)
+#define uart0_send_byte(C)          \
+            do {                    \
+                UCSR0A |= TXC0;     \
+                UDR0 = (C);         \
+            } while (0)
 
 #define uart0_tx_buffer_empty()   ((UCSR0A & (1<<UDRE0)) != 0)
 #define uart0_tx_send_complete()  ((UCSR0A & (1<<TXC0)) != 0)
 #define uart0_rx_data_available() ((UCSR0A & (1<<RXC0)) != 0)
 
 #define uart0_rx_error()    ((UCSR0A & ((1<<FE0)|(1<<DOR0)|(1<<UPE0))) != 0)
+#endif /* UNDEFINED */
+
+#endif /* __INCLUDE_AT90USB1287_H */
 
 
-/*
- * Define parameters for the ADC
- */
-
-#endif /* __INCLUDE_ATMEGA88_H */
